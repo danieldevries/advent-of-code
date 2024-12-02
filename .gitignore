@@ -1,0 +1,6 @@
+.DS_Store
+.idea/*
+.ruby-lsp/*
+
+.cookie
+inputs/**/*
