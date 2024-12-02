@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/runner'
+require 'debug'
+
+date = ARGV[0] || Time.new.strftime('%Y/%d')
+
+runner = Runner.new(date)
+runner.execute
