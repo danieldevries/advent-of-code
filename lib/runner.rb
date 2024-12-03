@@ -11,6 +11,6 @@ class Runner
   end
 
   def input
-    File.readlines("inputs/#{date}.txt")
+    File.readlines("inputs/#{date}.txt", chomp: true)
   end
 end
