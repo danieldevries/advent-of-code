@@ -2,39 +2,38 @@
 
 set -e
 
-if [[ -z "$1" ]]
-then
-  FORMATTED_DATE=$(date "+%Y/%d")
+if [[ -z "$1" ]]; then
+  formatted_date=$(date "+%Y/%d")
 
-  YEAR=$(date "+%Y")
-  DAY=$(date "+%-d")
-  DAY_0=$(date "+%d")
+  year=$(date "+%Y")
+  day=$(date "+%-d")
+  day_0=$(date "+%d")
 else
   [[ $1 =~ ^[0-9]{4}\/[0-9]{2}$ ]] || (echo "invalid format, use bin/start YYYY/DD" && exit 1)
 
-  FORMATTED_DATE="$1"
-  YEAR=$(echo "$1" | awk '{ split($0, a, "/"); print a[1] }' )
-  DAY_0=$(echo "$1" | awk '{ split($0, a, "/"); print a[2] }' )
-  DAY=$(echo "$DAY_0" | sed 's/^0*//')
+  formatted_date="$1"
+  year=$(echo "$1" | awk '{ split($0, a, "/"); print a[1] }' )
+  day_0=$(echo "$1" | awk '{ split($0, a, "/"); print a[2] }' )
+  day=$(echo "$day_0" | sed 's/^0*//')
 fi
 
-DIRECTORY="lib/$FORMATTED_DATE"
+directory="lib/$formatted_date"
 
-[[ -d "$DIRECTORY" ]] || mkdir -p "$DIRECTORY"
-touch "$DIRECTORY/solution.rb"
+[[ -d "$directory" ]] || mkdir -p "$directory"
+[[ -f "$directory/solution.rb" ]] || touch "$directory/solution.rb"
 
-if [[ -f .cookie ]]
-then
-  INPUT_DIRECTORY="inputs/$YEAR"
-  [[ -d "$INPUT_DIRECTORY" ]] || mkdir -p "$INPUT_DIRECTORY"
+if [[ -f .cookie ]]; then
+  input_directory="inputs/$year"
 
-  COOKIE=$(<.cookie)
-  URI="https://adventofcode.com/$YEAR/day/$DAY/input"
-  INPUT=$(curl --silent --cookie "$COOKIE" "$URI")
-  INPUT_PATH="$INPUT_DIRECTORY/$DAY_0.txt"
+  [[ -d "$input_directory" ]] || mkdir -p "$input_directory"
 
-  echo "$INPUT" > "$INPUT_PATH"
+  cookie=$(<.cookie)
+  uri="https://adventofcode.com/$year/day/$day/input"
+  input=$(curl --silent --cookie "$cookie" "$uri")
+  input_path="$input_directory/$day_0.txt"
+
+  echo "$input" > "$input_path"
 fi
 
-echo "https://adventofcode.com/$YEAR/day/$DAY"
+echo "https://adventofcode.com/$year/day/$day"
 echo "gl hf"
