@@ -13,4 +13,8 @@ class Runner
   def input
     File.readlines("inputs/#{date}.txt", chomp: true)
   end
+
+  def input_raw
+    File.read("inputs/#{date}.txt", chomp: true)
+  end
 end
